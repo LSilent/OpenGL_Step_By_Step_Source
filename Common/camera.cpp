@@ -17,6 +17,7 @@
 */
 
 #include "ogldev_camera.h"
+#include "GL/freeglut_std.h"
 
 const static float STEP_SCALE = 1.0f;
 const static float EDGE_STEP = 0.5f;
@@ -88,7 +89,7 @@ void Camera::Init()
     m_mousePos.x  = m_windowWidth / 2;
     m_mousePos.y  = m_windowHeight / 2;
 
-   // glutWarpPointer(m_mousePos.x, m_mousePos.y);
+    glutWarpPointer(m_mousePos.x, m_mousePos.y);
 }
 
 

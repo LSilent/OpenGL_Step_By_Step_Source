@@ -54,7 +54,7 @@ static void RenderSceneCB()
     Scale += 0.1f;
 
     Pipeline p;
-    p.Rotate(0.0f, Scale, 0.0f);
+    //p.Rotate(0.0f, Scale, 0.0f);
     p.WorldPos(0.0f, 0.0f, 3.0f);
     p.SetCamera(*pGameCamera);
     p.SetPerspectiveProj(gPersProjInfo);
@@ -207,7 +207,7 @@ int main(int argc, char** argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    glutInitWindowPosition(100, 100);
+    glutInitWindowPosition(0, 0);
     glutCreateWindow("Tutorial 15");
     glutGameModeString("1920x1200@32");
     glutEnterGameMode();
