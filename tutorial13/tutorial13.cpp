@@ -53,9 +53,7 @@ static void RenderSceneCB()
     Pipeline p;
     p.Rotate(0.0f, Scale, 0.0f);
     p.WorldPos(0.0f, 0.0f, -2.0f);
-	pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, Vector3f(0.0f, 0.0f, -3.0f), Vector3f(0.0f, 0.0f, 1.0f), Vector3f(0.0f, 1.0f, 0.0f));
     p.SetCamera(*pGameCamera);
-	delete pGameCamera;
     p.SetPerspectiveProj(gPersProjInfo);
 
 	const Matrix4f &m = p.GetWVPTrans();
@@ -197,7 +195,7 @@ int main(int argc, char** argv)
 
     InitializeGlutCallbacks();
 
-    pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT);
+	pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, Vector3f(0.0f, 0.0f, -3.0f), Vector3f(0.0f, 0.0f, 1.0f), Vector3f(0.0f, 1.0f, 0.0f));
 
     // Must be done after glut is initialized!
     GLenum res = glewInit();
@@ -221,5 +219,6 @@ int main(int argc, char** argv)
 	                
     glutMainLoop();
 
+	delete pGameCamera;
     return 0;
 }
