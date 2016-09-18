@@ -55,7 +55,7 @@ Camera::Camera(int WindowWidth, int WindowHeight, const Vector3f& Pos, const Vec
 void Camera::Init()
 {
     Vector3f HTarget(m_target.x, 0.0, m_target.z);
-    HTarget.Normalize();
+    HTarget.Normalize();// 这行不能注释，因为圆的半径要求为1，初始旋转角度才等于arcsin(z)
     
     if (HTarget.z >= 0.0f)
     {
@@ -230,11 +230,11 @@ void Camera::Update()
     // Rotate the view vector by the horizontal angle around the vertical axis
     Vector3f View(1.0f, 0.0f, 0.0f);
     View.Rotate(m_AngleH, Vaxis);
-    View.Normalize();
+    View.Normalize(); // 这行被注释了也是可以的，Rotate函数与向量是否标准化无关
 
     // Rotate the view vector by the vertical angle around the horizontal axis
     Vector3f Haxis = Vaxis.Cross(View);
-    Haxis.Normalize();
+	Haxis.Normalize(); // 这行被注释了也是可以的，Rotate函数与向量是否标准化无关
     View.Rotate(m_AngleV, Haxis);
        
     m_target = View;
