@@ -19,17 +19,11 @@
 */
 
 #include <GL/freeglut.h>
-#include <stdio.h>
 
 static void RenderSceneCB()
-{	
-	SYSTEMTIME systemTimeLast, systemTimeCurrent;
-	memset(&systemTimeLast, 0, sizeof(SYSTEMTIME));
-	GetLocalTime(&systemTimeCurrent);
+{
     glClear(GL_COLOR_BUFFER_BIT);
     glutSwapBuffers();
-	printf("%d\n", systemTimeCurrent.wMilliseconds - systemTimeLast.wMilliseconds);
-	systemTimeLast = systemTimeCurrent;
 }
 
 static void InitializeGlutCallbacks()

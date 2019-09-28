@@ -18,10 +18,14 @@
 #ifndef LIGHTS_COMMON_H
 #define	LIGHTS_COMMON_H
 
+#include "ATB/AntTweakBar.h"
+
 #include "ogldev_math_3d.h"
 
-struct BaseLight
+class BaseLight
 {
+public:
+    std::string Name;
     Vector3f Color;
     float AmbientIntensity;
     float DiffuseIntensity;
@@ -32,40 +36,58 @@ struct BaseLight
         AmbientIntensity = 0.0f;
         DiffuseIntensity = 0.0f;
     }
+        
+    virtual void AddToATB(TwBar *bar);
 };
 
-struct DirectionalLight : public BaseLight
-{        
+
+class DirectionalLight : public BaseLight
+{      
+public:
     Vector3f Direction;
 
     DirectionalLight()
     {
         Direction = Vector3f(0.0f, 0.0f, 0.0f);
     }
+    
+    virtual void AddToATB(TwBar *bar);
 };
 
-struct PointLight : public BaseLight
-{
-    Vector3f Position;
 
-    struct
+struct LightAttenuation
+{
+    float Constant;
+    float Linear;
+    float Exp;
+    
+    LightAttenuation()
     {
-        float Constant;
-        float Linear;
-        float Exp;
-    } Attenuation;
+        Constant = 1.0f;
+        Linear = 0.0f;
+        Exp = 0.0f;
+    }
+};
+
+
+class PointLight : public BaseLight
+{
+public:
+    Vector3f Position;
+    LightAttenuation Attenuation;
 
     PointLight()
     {
         Position = Vector3f(0.0f, 0.0f, 0.0f);
-        Attenuation.Constant = 0.0f;
-        Attenuation.Linear = 0.0f;
-        Attenuation.Exp = 0.0f;
     }
+    
+    virtual void AddToATB(TwBar *bar);
 };
 
-struct SpotLight : public PointLight
+
+class SpotLight : public PointLight
 {
+public:
     Vector3f Direction;
     float Cutoff;
 
@@ -74,7 +96,10 @@ struct SpotLight : public PointLight
         Direction = Vector3f(0.0f, 0.0f, 0.0f);
         Cutoff = 0.0f;
     }
+    
+    virtual void AddToATB(TwBar *bar);
 };
+
 
 #define COLOR_WHITE Vector3f(1.0f, 1.0f, 1.0f)
 #define COLOR_RED Vector3f(1.0f, 0.0f, 0.0f)

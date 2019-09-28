@@ -52,15 +52,14 @@ static void RenderSceneCB()
 
     Pipeline p;
     p.Rotate(0.0f, Scale, 0.0f);
-    p.WorldPos(0.0f, 0.0f, 5.0f);
+    p.WorldPos(0.0f, 0.0f, 3.0f);
+    Vector3f CameraPos(0.0f, 0.0f, -3.0f);
+    Vector3f CameraTarget(0.0f, 0.0f, 2.0f);
+    Vector3f CameraUp(0.0f, 1.0f, 0.0f);
     p.SetCamera(*pGameCamera);
     p.SetPerspectiveProj(gPersProjInfo);
 
-	const Matrix4f &m = p.GetWVPTrans();
-	Vector4f pp = m * Vector4f(-2.0f, -2.0f, 0.5773f, 1.0f);
-	Vector4f ppp = Vector4f(pp.x / pp.w, pp.y / pp.w, pp.z / pp.w, pp.w);
-
-    glUniformMatrix4fv(gWVPLocation, 1, GL_TRUE, p.GetWVPTrans());
+    glUniformMatrix4fv(gWVPLocation, 1, GL_TRUE, (const GLfloat*)p.GetWVPTrans());
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -84,15 +83,10 @@ static void InitializeGlutCallbacks()
 static void CreateVertexBuffer()
 {
     Vector3f Vertices[4];
-//     Vertices[0] = Vector3f(-1.0f, -1.0f, 0.5773f);
-//     Vertices[1] = Vector3f(0.0f, -1.0f, -1.15475f);
-//     Vertices[2] = Vector3f(1.0f, -1.0f, 0.5773f);
-//     Vertices[3] = Vector3f(0.0f, 1.0f, 0.0f);
-
-	Vertices[0] = Vector3f(-2.0f, -2.0f, 0.5773f);
-	Vertices[1] = Vector3f(0.0f, -2.0f, -1.15475f);
-	Vertices[2] = Vector3f(2.0f, -2.0f, 0.5773f);
-	Vertices[3] = Vector3f(0.0f, 2.0f, 0.0f);
+    Vertices[0] = Vector3f(-1.0f, -1.0f, 0.5773f);
+    Vertices[1] = Vector3f(0.0f, -1.0f, -1.15475f);
+    Vertices[2] = Vector3f(1.0f, -1.0f, 0.5773f);
+    Vertices[3] = Vector3f(0.0f, 1.0f, 0.0f);
 
  	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -195,7 +189,7 @@ int main(int argc, char** argv)
 
     InitializeGlutCallbacks();
 
-	pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, Vector3f(0.0f, 0.0f, -3.0f), Vector3f(0.0f, 0.0f, 1.0f), Vector3f(0.0f, 1.0f, 0.0f));
+    pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     // Must be done after glut is initialized!
     GLenum res = glewInit();
@@ -219,6 +213,5 @@ int main(int argc, char** argv)
 	                
     glutMainLoop();
 
-	delete pGameCamera;
     return 0;
 }

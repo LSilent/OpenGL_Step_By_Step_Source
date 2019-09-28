@@ -27,9 +27,9 @@
 #include <math.h>
 #endif
 
-#include <vector3.h>
-#include <matrix3x3.h>
-#include <matrix4x4.h>
+#include <assimp/vector3.h>
+#include <assimp/matrix3x3.h>
+#include <assimp/matrix4x4.h>
 
 #include "ogldev_util.h"
 
@@ -67,15 +67,20 @@ struct Vector3f
     float y;
     float z;
 
-    Vector3f()
-    {
-    }
+    Vector3f() {}
 
     Vector3f(float _x, float _y, float _z)
     {
         x = _x;
         y = _y;
         z = _z;
+    }
+    
+    Vector3f(const float* pFloat)
+    {
+        x = pFloat[0];
+        y = pFloat[0];
+        z = pFloat[0];
     }
     
     Vector3f(float f)
@@ -148,9 +153,13 @@ struct Vector4f
         w = _w;
     }
     
-    void Print() const
+    void Print(bool endl = true) const
     {
         printf("(%.02f, %.02f, %.02f, %.02f)", x, y, z, w);
+        
+        if (endl) {
+            printf("\n");
+        }
     }       
     
     Vector3f to3f() const
@@ -209,6 +218,31 @@ struct PersProjInfo
     float zNear;
     float zFar;
 };
+
+
+struct OrthoProjInfo
+{
+    float r;        // right
+    float l;        // left
+    float b;        // bottom
+    float t;        // top
+    float n;        // z near
+    float f;        // z far
+};
+
+struct Quaternion
+{
+    float x, y, z, w;
+
+    Quaternion(float _x, float _y, float _z, float _w);
+
+    void Normalize();
+
+    Quaternion Conjugate();  
+    
+    Vector3f ToDegrees();
+ };
+
 
 class Matrix4f
 {
@@ -320,23 +354,12 @@ public:
     
     void InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ);
     void InitRotateTransform(float RotateX, float RotateY, float RotateZ);
+    void InitRotateTransform(const Quaternion& quat);
     void InitTranslationTransform(float x, float y, float z);
     void InitCameraTransform(const Vector3f& Target, const Vector3f& Up);
     void InitPersProjTransform(const PersProjInfo& p);
-    void InitOrthoProjTransform(const PersProjInfo& p);
+    void InitOrthoProjTransform(const OrthoProjInfo& p);
 };
-
-
-struct Quaternion
-{
-    float x, y, z, w;
-
-    Quaternion(float _x, float _y, float _z, float _w);
-
-    void Normalize();
-
-    Quaternion Conjugate();  
- };
 
 Quaternion operator*(const Quaternion& l, const Quaternion& r);
 

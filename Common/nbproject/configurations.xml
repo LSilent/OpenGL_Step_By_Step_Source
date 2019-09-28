@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>FreetypeGL/freetypeGL.h</itemPath>
       <itemPath>../Include/ogldev_app.h</itemPath>
+      <itemPath>../Include/ogldev_atb.h</itemPath>
       <itemPath>../Include/ogldev_backend.h</itemPath>
       <itemPath>../Include/ogldev_basic_lighting.h</itemPath>
       <itemPath>../Include/ogldev_basic_mesh.h</itemPath>
@@ -38,10 +39,12 @@
       <itemPath>io_buffer.cpp</itemPath>
       <itemPath>math_3d.cpp</itemPath>
       <itemPath>ogldev_app.cpp</itemPath>
+      <itemPath>ogldev_atb.cpp</itemPath>
       <itemPath>ogldev_backend.cpp</itemPath>
       <itemPath>ogldev_basic_lighting.cpp</itemPath>
       <itemPath>ogldev_basic_mesh.cpp</itemPath>
       <itemPath>ogldev_glfw_backend.cpp</itemPath>
+      <itemPath>ogldev_shadow_map_fbo.cpp</itemPath>
       <itemPath>ogldev_skinned_mesh.cpp</itemPath>
       <itemPath>ogldev_texture.cpp</itemPath>
       <itemPath>ogldev_util.cpp</itemPath>
@@ -53,6 +56,12 @@
       <itemPath>FreetypeGL/texture-glyph.c</itemPath>
       <itemPath>FreetypeGL/vector.c</itemPath>
       <itemPath>FreetypeGL/vertex-buffer.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -78,13 +87,15 @@
             <pElem>../Include</pElem>
             <pElem>FreetypeGL</pElem>
           </incDir>
-          <commandLine>`pkg-config --cflags ImageMagick++ freetype2 assimp`</commandLine>
+          <commandLine>`pkg-config --cflags ImageMagick++ freetype2 assimp` -fPIC</commandLine>
           <warningLevel>2</warningLevel>
         </ccTool>
         <archiverTool>
         </archiverTool>
       </compileType>
       <item path="../Include/ogldev_app.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Include/ogldev_atb.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../Include/ogldev_backend.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -155,6 +166,8 @@
       </item>
       <item path="ogldev_app.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="ogldev_atb.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="ogldev_backend.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ogldev_basic_lighting.cpp" ex="false" tool="1" flavor2="0">
@@ -162,6 +175,8 @@
       <item path="ogldev_basic_mesh.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ogldev_glfw_backend.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ogldev_shadow_map_fbo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ogldev_skinned_mesh.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -200,6 +215,8 @@
       </compileType>
       <item path="../Include/ogldev_app.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../Include/ogldev_atb.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../Include/ogldev_backend.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../Include/ogldev_basic_lighting.h" ex="false" tool="3" flavor2="0">
@@ -269,6 +286,8 @@
       </item>
       <item path="ogldev_app.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="ogldev_atb.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="ogldev_backend.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ogldev_basic_lighting.cpp" ex="false" tool="1" flavor2="0">
@@ -276,6 +295,8 @@
       <item path="ogldev_basic_mesh.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ogldev_glfw_backend.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ogldev_shadow_map_fbo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ogldev_skinned_mesh.cpp" ex="false" tool="1" flavor2="0">
       </item>

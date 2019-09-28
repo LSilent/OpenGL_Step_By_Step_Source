@@ -64,10 +64,12 @@ public:
         m_persProjInfo.zNear  = 1.0f;
         m_persProjInfo.zFar   = 1000.0f;  
  
-        m_shadowOrthoProjInfo.Height = 200;
-        m_shadowOrthoProjInfo.Width  = 200;            
-        m_shadowOrthoProjInfo.zNear  = -10.0f;                    
-        m_shadowOrthoProjInfo.zFar   = 100.0f;          
+        m_shadowOrthoProjInfo.l = -100.0f;
+        m_shadowOrthoProjInfo.r = 100.0f;
+        m_shadowOrthoProjInfo.t = 100.0f;
+        m_shadowOrthoProjInfo.b = -100.0f;
+        m_shadowOrthoProjInfo.n = -10.0f;                    
+        m_shadowOrthoProjInfo.f = 100.0f;          
         
         m_quad.GetOrientation().m_scale    = Vector3f(50.0f, 100.0f, 100.0f);
         m_quad.GetOrientation().m_pos      = Vector3f(0.0f, 0.0f, 90.0f);
@@ -87,7 +89,7 @@ public:
 
     bool Init()
     {
-        if (!m_shadowMapFBO.Init(1024, 1024)) {
+        if (!m_shadowMapFBO.Init(WINDOW_WIDTH, WINDOW_HEIGHT)) {
             return false;
         }
 
@@ -98,7 +100,7 @@ public:
         m_pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, Pos, Target, Up);
         
         if (!m_LightingTech.Init()) {
-            OGLDEV_ERROR("Error initializing the lighting technique\n");
+            OGLDEV_ERROR0("Error initializing the lighting technique\n");
             return false;
         }
 
@@ -169,7 +171,7 @@ public:
 
         Pipeline p;
         p.SetCamera(Vector3f(0.0f, 0.0f, 0.0f), m_dirLight.Direction, Vector3f(0.0f, 1.0f, 0.0f));
-        p.SetPerspectiveProj(m_shadowOrthoProjInfo);                    
+        p.SetOrthographicProj(m_shadowOrthoProjInfo);                    
         
         for (int i = 0; i < NUM_MESHES ; i++) {
             p.Orient(m_meshOrientation[i]);
@@ -192,12 +194,12 @@ public:
         m_shadowMapFBO.BindForReading(SHADOW_TEXTURE_UNIT);
 
         Pipeline p;        
-        p.SetPerspectiveProj(m_shadowOrthoProjInfo);        
+        p.SetOrthographicProj(m_shadowOrthoProjInfo);        
         p.Orient(m_quad.GetOrientation());
         p.SetCamera(Vector3f(0.0f, 0.0f, 0.0f), m_dirLight.Direction, Vector3f(0.0f, 1.0f, 0.0f));
         m_LightingTech.SetLightWVP(p.GetWVOrthoPTrans());        
-        p.SetPerspectiveProj(m_persProjInfo);        
         p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
+        p.SetPerspectiveProj(m_persProjInfo);        
         m_LightingTech.SetWVP(p.GetWVPTrans());
         m_LightingTech.SetWorldMatrix(p.GetWorldTrans());        
         m_pGroundTex->Bind(COLOR_TEXTURE_UNIT);
@@ -212,7 +214,7 @@ public:
     }
     
 	       
-    virtual void KeyboardCB(OGLDEV_KEY OgldevKey)
+    virtual void KeyboardCB(OGLDEV_KEY OgldevKey, OGLDEV_KEY_STATE OgldevKeyState = OGLDEV_KEY_STATE_PRESS)
     {
         switch (OgldevKey) {
             case OGLDEV_KEY_ESCAPE:
@@ -243,7 +245,7 @@ private:
     Texture* m_pGroundTex;
     ShadowMapFBO m_shadowMapFBO;
     PersProjInfo m_persProjInfo;
-    PersProjInfo m_shadowOrthoProjInfo;
+    OrthoProjInfo m_shadowOrthoProjInfo;
 };
 
 
