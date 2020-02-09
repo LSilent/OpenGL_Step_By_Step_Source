@@ -184,6 +184,9 @@ public:
             case OGLDEV_KEY_x:
                 m_directionalLight.DiffuseIntensity -= 0.05f;
                 break;
+			default:
+				m_pGameCamera->OnKeyboard(OgldevKey);
+				break;
         }
     }
 

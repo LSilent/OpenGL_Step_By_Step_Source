@@ -153,6 +153,9 @@ public:
             case OGLDEV_KEY_s:
                 m_directionalLight.AmbientIntensity -= 0.05f;
                 break;
+			default:
+				m_pGameCamera->OnKeyboard(OgldevKey);
+				break;
         }
     }
 
